@@ -11,19 +11,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.models.Person;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.services.PersonServiceImpl;
+import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final PersonServiceImpl personService;
+    private final RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(PersonServiceImpl personService) {
+    public AdminController(PersonServiceImpl personService, RoleServiceImpl roleService) {
         this.personService = personService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -39,7 +44,9 @@ public class AdminController {
         return "show";
     }
     @GetMapping("/new")
-    public String registrationPage(@ModelAttribute("person") Person person) {
+    public String registrationPage(@ModelAttribute("person") Person person, Model model) {
+        List<Role> roles = roleService.getAllRoles();
+        model.addAttribute("rolesAdd", roles);
         return "/registration";
     }
     @PostMapping()
