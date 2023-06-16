@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.Person;
 import ru.kata.spring.boot_security.demo.repositories.PersonRepositiry;
+import ru.kata.spring.boot_security.demo.security.LoaderUser;
 import ru.kata.spring.boot_security.demo.security.PersonDetails;
 
 import java.util.List;
@@ -16,21 +17,20 @@ import java.util.Optional;
 public class PersonServiceImpl implements PersonService{
     private final PersonRepositiry personRepositiry;
 
-    @Autowired
     public PersonServiceImpl(PersonRepositiry personRepositiry) {
         this.personRepositiry = personRepositiry;
     }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Optional<Person> userDetails = personRepositiry.findByUserName(username);
-        if(userDetails.isEmpty()){
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new PersonDetails(userDetails.get());
-    }
+//    @Override
+//    @Transactional
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//
+//        Optional<Person> userDetails = personRepositiry.findByUserName(username);
+//        if(userDetails.isEmpty()){
+//            throw new UsernameNotFoundException("User not found");
+//        }
+//        return new PersonDetails(userDetails.get());
+//    }
 
     @Override
     public List<Person> findAll() {
@@ -48,11 +48,13 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
+    @Transactional
     public void save(Person user) {
         personRepositiry.save(user);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         personRepositiry.delete(getUser(id));
     }
