@@ -21,17 +21,6 @@ public class PersonServiceImpl implements PersonService{
         this.personRepositiry = personRepositiry;
     }
 
-//    @Override
-//    @Transactional
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//
-//        Optional<Person> userDetails = personRepositiry.findByUserName(username);
-//        if(userDetails.isEmpty()){
-//            throw new UsernameNotFoundException("User not found");
-//        }
-//        return new PersonDetails(userDetails.get());
-//    }
-
     @Override
     public List<Person> findAll() {
         return personRepositiry.findAll();
