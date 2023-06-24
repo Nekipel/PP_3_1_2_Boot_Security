@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +28,9 @@ public class Person {
     @Column(name="Age")
     private int age;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(
+//            cascade = {CascadeType.PERSIST},
+            fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})

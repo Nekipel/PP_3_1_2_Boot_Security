@@ -39,7 +39,9 @@ public class PersonServiceImpl implements PersonService{
     @Override
     @Transactional
     public void save(Person user) {
-        personRepositiry.save(user);
+//        if(!findByName(user.getUserName()).equals(user)){
+            personRepositiry.save(user);
+//        }
     }
 
     @Override
